@@ -111,8 +111,16 @@ class SSEClient(object):
                     urllib3.exceptions.ProtocolError,
                 ) as e:
                     print(e)
-                    time.sleep(self.retry / 1000.0)
-                    self._connect()
+                    while True: # loop until reconnect succeeds
+                        try:
+                            time.sleep(self.retry / 1000.0)
+                            self._connect()
+                            break
+                        except (
+                            requests.exceptions.HTTPError
+                        ) as err:
+                            print(err)
+                            continue
 
                     # The SSE spec only supports resuming from a whole message, so
                     # if we have half a message we should throw it out.
