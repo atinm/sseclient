@@ -117,7 +117,9 @@ class SSEClient(object):
                             self._connect()
                             break
                         except (
-                            requests.exceptions.HTTPError
+                            requests.exceptions.HTTPError,
+                            requests.exceptions.ConnectionError,
+                            requests.exceptions.Timeout,
                         ) as err:
                             print(err)
                             continue
