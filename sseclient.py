@@ -23,11 +23,11 @@ end_of_field = re.compile(r'\r\n\r\n|\r\r|\n\n')
 
 
 class SSEClient(object):
-    def __init__(self, url, last_id=None, retry=3000, session=None, chunk_size=1024, **kwargs):
+    def __init__(self, url, last_id=None, retry=3000, session=None, chunk_size=1, **kwargs):
         self.url = url
         self.last_id = last_id
         self.retry = retry
-        self.chunk_size = chunk_size
+        self.chunk_size = chunk_size # should always be 1 as usually cannot guarantee chunk size
 
         # Optional support for passing in a requests.Session()
         self.session = session
